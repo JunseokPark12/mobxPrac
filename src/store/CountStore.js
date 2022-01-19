@@ -2,7 +2,8 @@ import { action, makeObservable, observable } from 'mobx';
 
 class CountStore {
   count = 0;
-  constructor() {
+  constructor(rootStore) {
+    this.rootStore = rootStore;
     makeObservable(this, {
       count: observable,
       increase: action,
@@ -18,3 +19,5 @@ class CountStore {
     this.count--;
   };
 }
+
+export default CountStore;
