@@ -2,16 +2,18 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const countSlice = createSlice({
   name: 'counter',
-  initialState: 0,
+  initialState: {
+    value: 0,
+  },
   reducers: {
     increment: {
       reducer(state) {
-        state += 1;
+        state.value += 1;
       },
     },
     decrement: {
       reducer(state) {
-        state -= 1;
+        state.value -= 1;
       },
     },
   },
