@@ -1,9 +1,5 @@
-import CountStore from './CountStore';
-
 class RootStore {
-  constructor() {
-    this.countStore = new CountStore(this);
-  }
+  constructor() {}
 }
 
 export default RootStore;
