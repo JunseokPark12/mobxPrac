@@ -8,12 +8,14 @@ const countSlice = createSlice({
   reducers: {
     increment: {
       reducer(state) {
-        state.value += 1;
+        const propState = state;
+        propState.value += 1;
       },
     },
     decrement: {
       reducer(state) {
-        state.value -= 1;
+        const propState = state;
+        propState.value -= 1;
       },
     },
   },

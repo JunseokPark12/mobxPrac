@@ -15,8 +15,6 @@ module.exports = {
   ignorePatterns: ['.eslintrc.js'],
   rules: {
     "no-unused-vars": 1,
-    "no-param-reassign": [2, { 
-      "props": false
-  }]
+    "import/prefer-default-export": "off"
   }
 };
