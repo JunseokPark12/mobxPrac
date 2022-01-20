@@ -1,5 +1,8 @@
-class RootStore {
-  constructor() {}
-}
+import { configureStore } from '@reduxjs/toolkit';
+import countSlice from './countSlice';
 
-export default RootStore;
+const store = configureStore({
+  reducer: [countSlice.reducer],
+});
+
+export default store;
