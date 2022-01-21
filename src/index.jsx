@@ -5,11 +5,11 @@ import { Provider } from 'react-redux';
 import App from './App';
 import store from './store';
 
-const quertClient = new QueryClient();
+const queryClient = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>
-    <QueryClientProvider client={quertClient}>
+    <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <App />
       </Provider>

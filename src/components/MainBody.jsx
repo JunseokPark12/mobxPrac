@@ -1,9 +1,23 @@
+import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import axios from 'axios';
-import { useEffect } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { decrement, increment } from '../store/countSlice';
+
+const getDataFromStarwarsApi = async (url) => {
+  const randomValue = Math.floor(Math.random() * 10 + 1);
+  const { status, data } = await axios.get(`${url}${randomValue}`);
+  console.log('api called', url);
+  if (status === 200) return data;
+  return null;
+};
+
+const useTestQuery = () => {
+  return useQuery('apiData', () => getDataFromStarwarsApi(`https://swapi.dev/api/people/`), {
+    staleTime: Infinity,
+  });
+};
 
 const ChangeButton = styled.button`
   width: 30px;
@@ -13,18 +27,16 @@ const ChangeButton = styled.button`
 
 function MainBody() {
   const dispatch = useDispatch();
-  const { data, isLoading, error } = useTestQuery();
+  const queryClient = useQueryClient();
+  const { isLoading, isSuccess, data } = useTestQuery();
 
-  useEffect(() => {}, []);
-
-  const getDataFromStarwarsApi = async (url) => {
-    const { status, data } = await axios.get('url');
-    if (status === 200) return data;
-    return null;
+  const whenClickDecrement = () => {
+    // queryClient.invalidateQueries('apiData');
+    dispatch(decrement());
   };
 
-  const useTestQuery = () => {
-    return useQuery('apiData', getDataFromStarwarsApi);
+  const doRefetch = () => {
+    queryClient.invalidateQueries();
   };
 
   return (
@@ -33,10 +45,14 @@ function MainBody() {
       <ChangeButton color="green" onClick={() => dispatch(increment())}>
         +
       </ChangeButton>
-      <ChangeButton color="red" onClick={() => dispatch(decrement())}>
+      <ChangeButton color="red" onClick={() => whenClickDecrement()}>
         -
       </ChangeButton>
-      ${isLoading && <p>Loading</p>}
+      <button onClick={doRefetch} type="button">
+        Refetch
+      </button>
+      {isLoading && <p>Loading</p>}
+      {isSuccess && <p>{data.name}</p>}
     </div>
   );
 }
