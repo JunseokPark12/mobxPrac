@@ -8,6 +8,7 @@ import { decrement, increment } from '../store/countSlice';
 const getDataFromStarwarsApi = async (url) => {
   const randomValue = Math.floor(Math.random() * 10 + 1);
   const { status, data } = await axios.get(`${url}${randomValue}`);
+  url += '123';
   console.log('api called', url);
   if (status === 200) return data;
   return null;
